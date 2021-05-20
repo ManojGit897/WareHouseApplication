@@ -1,0 +1,54 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">	
+</head>
+
+<body>
+	<div class="container">
+	<div class="card">
+	
+	<div class="card-header bg-primary text-white text-center">
+			<h3>ORDER METHOD DATA PAGE</h3>
+		</div>
+
+		<div class="card-body">
+			<a th:href="@{/om/excel}" class="btn btn-success">Excel <i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
+			<a th:href="@{/om/charts}" class="btn btn-info" >Charts </a>
+			<table class="table table-hover">
+				<tr class="bg-info text-white">
+					<th>ID</th>
+					<th>MODE</th>
+					<th>CODE</th>
+					<th>TYPE</th>
+					<th>ACCEPT</th>
+					<th>DESCRIPTION</th>
+					<th>OPERATIONS</th>
+				</tr>
+				<tr th:each="ob:${list}">
+					<td th:text="${ob.id}"></td>
+					<td th:text="${ob.orderMode}"></td>
+					<td th:text="${ob.orderCode}"></td>
+					<td th:text="${ob.orderType}"></td>
+					<td th:text="${ob.orderAcpt}"></td>
+					<td th:text="${ob.orderDesc}"></td>
+					<td>
+						<a th:href="@{/om/delete(id=${ob.id})}" class="btn btn-danger"> DELETE <i class="fa fa-trash-o" aria-hidden="true"></i> </a>|
+						<a th:href="@{/om/edit(id=${ob.id})}" class="btn btn-warning">EDIT <i class="fa fa-pencil" aria-hidden="true"></i></a>
+					</td>
+				</tr>
+			</table>
+		</div>
+			
+			<div class="card-footer bg-success text-white" th:if="${message!=null}">
+				<span th:text="${message}"></span>
+			</div>
+
+		</div> <!-- card end -->
+	</div>
+	<!-- container end -->
+</body>
+</html>

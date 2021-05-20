@@ -1,0 +1,110 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+
+            <div class="card-header bg-primary text-white text-center">
+                <h2>UOM REGISTER PAGE !</h2>
+            </div>
+
+            <div class="card-body">
+                <form id="UomRegister" th:action="@{/uom/update}" method="POST" th:object="${uom}">
+                
+                 <!-- row -0 -->
+                    <div class="row">
+
+                        <div class="col-3">
+                            <label>Uom id</label>
+                        </div>
+
+                        <div class="col-4">
+                            <input type="text" th:field="*{id}" class="form-control"  readonly="readonly"/>
+                        </div>
+
+                    </div>
+            
+                    <!-- row-1 -->
+                    <div class="row">
+
+                        <div class="col-3">
+                            <label>Uom Type</label>
+                        </div>
+
+                        <div class="col-4">
+
+                            <select class="form-control" th:field="*{uomType}" id="uomType">
+                                <option value="">--Select--</option>
+                                <option value="PACKING">PACKING</option>
+                                <option value="NO PACKING">NO PACKING</option>
+                                <option value="NA">NA</option>
+                            </select>
+
+                        </div>
+
+                        <div class="col-5">
+                            <span id="uomTypeError"></span>
+                        </div>
+
+                    </div><!-- row-1 end -->
+
+
+                    <!-- row -2 -->
+                    <div class="row">
+
+                        <div class="col-3">
+                            <label>Uom Model</label>
+                        </div>
+
+                        <div class="col-4">
+                            <input type="text" th:field="*{uomModel}" id="uomModel" class="form-control" />
+                        </div>
+
+                        <div class="col-5">
+                            <span id="uomModelError"></span>
+                        </div>
+
+                    </div>
+
+                    <!-- row-3 -->
+                    <div class="row">
+
+                        <div class="col-3">
+                            <label>Description</label>
+                        </div>
+
+                        <div class="col-4">
+                            <textarea th:field="*{uomDesc}" id="uomDesc" class="form-control"></textarea>
+
+                        </div>
+
+                        <div class="col-5">
+                            <span id="uomDescError"></span>
+                        </div>
+
+                    </div>
+
+                    <input type="submit" value="Update " class="btn-success" />
+
+                </form>
+            </div>
+            <!-- card-body end -->
+
+            <div class="card-footer text-center" th:if="${message!=null}">
+                <span class="text-success" th:text="${message}"></span>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" th:src="@{/myjs/uom.js}"> </script>
+        
+   
+
+</body>
+
+</html>

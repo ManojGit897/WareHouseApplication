@@ -1,0 +1,56 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="card-header text-center bg-primary text-white">
+            <h1>Uom Data Page</h1>
+        </div>
+        <div class="card-body">
+     <a th:href="@{/uom/excel}" class="btn btn-info">Excel Export <i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
+          <a th:href="@{/uom/charts}" class="btn btn-info" >Charts </a>
+            <table class="table table-hover">
+
+                <tr class="bg-info text-white">
+                    <th>ID</th>
+                    <th>TYPE</th>
+                    <th>MODEL</th>
+                    <th>DESCRIPTION</th>
+                    <th>OPERATION</th>
+                </tr>
+
+                <tr th:each="ob:${list}">
+
+                    <td th:text="${ob.id}"></td>
+                    <td th:text="${ob.uomType}"></td>
+                    <td th:text="${ob.uomModel}"></td>
+                    <td th:text="${ob.uomDesc}"></td>
+                    <td><a class="btn btn-danger" th:href="@{/uom/delete(id=${ob.id})}">Delete <i class="fa fa-trash-o" aria-hidden="true"></i></a>|
+                        <a class="btn btn-primary" th:href="@{/uom/edit(id=${ob.id})}">Edit <i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    </td>
+
+                </tr>
+
+
+            </table>
+
+
+            <div class="card-footer bg-success text-center" th:if="${message!=null}">
+                <span th:text=${message}></span>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+</body>
+
+</html>

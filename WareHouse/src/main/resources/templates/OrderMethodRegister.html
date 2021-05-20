@@ -1,0 +1,109 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header bg-primary text-white text-center">
+                <h3>WELCOME TO ORDER METHOD REGISTER PAGE</h3>
+            </div>
+            <div class="card-body">
+                <form id="myOmForm" th:action="@{/om/save}" method="POST">
+                	  <!-- Row#1 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Order Mode</label>
+                        </div>
+                        <div class="col-4">
+                            <input type="radio" name="orderMode" id="orderMode1" value="Sale"/> Sale
+                            <input type="radio" name="orderMode" id="orderMode2" value="Purchase"/> Purchase
+                        </div>
+                        <div class="col-5">
+                            <span id="orderModeError"></span>
+                        </div>
+                    </div>
+                    
+                    
+                    <!-- Row#2 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Order Code</label>
+                        </div>
+                        <div class="col-4">
+                            <input type="text" name="orderCode" id="orderCode" class="form-control" />
+                        </div>
+                        <div class="col-5">
+                            <span id="orderCodeError"></span>
+                        </div>
+                    </div>
+                
+                
+                    <!-- Row#3 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Order Type</label>
+                        </div>
+                        <div class="col-4">
+                            <select name="orderType" id="orderType" class="form-control">
+                                <option value="">-SELECT-</option>
+                                <option value="FIFO">FIFO</option>
+                                <option value="LIFO">LIFO</option>
+                                <option value="FEFO">FEFO</option>
+                                <option value="FCFO">FCFO</option>
+                            </select>
+                        </div>
+                        <div class="col-5">
+                            <span id="orderTypeError"></span>
+                        </div>
+                    </div>
+
+                    <!-- Row#4 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Order Accept</label>
+                        </div>
+                        <div class="col-4">
+                            <input type="checkbox" name="orderAcpt" id="orderAcpt1" value="Multi-Model" /> Multi-Model
+                            <input type="checkbox" name="orderAcpt" id="orderAcpt1" value="Accept Return" /> Accept Return
+                        </div>
+                        <div class="col-5">
+                            <span id="orderAcptError"></span>
+                        </div>
+                    </div>
+
+                    <!-- Row#5 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Description</label>
+                        </div>
+                        <div class="col-4">
+                            <textarea name="orderDesc" id="orderDesc" class="form-control"></textarea>
+                        </div>
+                        <div class="col-5">
+                            <span id="orderDescError"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success" >
+                    	ADD ORDER METHOD <i class="fa fa-plus-square" aria-hidden="true"></i>
+                    </button>
+                    
+                </form>
+            </div>
+            <!-- card body end -->
+             <div class="card-footer text-center" th:if="${message!=null}">
+                <span class="text-success" th:text="${message}"></span>
+            </div> <!--  footer end -->
+        </div>
+        <!-- card end -->
+    </div>
+    <!-- container end -->
+    <script type="text/javascript" th:src="@{/myjs/om.js}"></script>
+
+</body>
+
+</html>
