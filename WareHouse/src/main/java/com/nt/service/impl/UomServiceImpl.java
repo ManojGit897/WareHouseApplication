@@ -2,6 +2,9 @@ package com.nt.service.impl;
 
 import java.util.List
 ;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,6 +71,21 @@ public class UomServiceImpl implements IUomService {
 		return repo.getUomTypeAndCount();
 	}
 
+	public Map<Integer, String> getUomIdAndModel() {
+		List<Object[]> list =  repo.getUomIdAndModel();
+		//JDK 1.8
+		return list.stream()
+				.collect(
+						Collectors.toMap(
+								ob->(Integer)ob[0], ob->(String)ob[1])
+						);
+
+		/*Map<Integer, String> map = new LinkedHashMap<>();
+		for(Object[] ob: list ) {
+			map.put((Integer)ob[0], (String)ob[1]);
+		}
+		return map;*/
+	}
 	
 
 }

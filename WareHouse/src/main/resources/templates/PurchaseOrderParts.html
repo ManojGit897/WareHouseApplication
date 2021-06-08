@@ -1,0 +1,80 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+	<title>PO DATA PAGE</title>
+</head>
+
+<body>
+	<div th:insert="fragments/commonui :: userheader"></div>
+	<div th:insert="fragments/commonui :: usermenu"></div>
+	<div th:insert="fragments/commonui :: userfooter"></div>
+
+	<div class="container">
+	<div class="card">
+		<div class="card-header bg-primary text-white text-center">
+			<h3>PO PARTS PAGE</h3>
+		</div>
+
+		<div class="card-body">
+			<table class="table table-hover">
+				<tr>
+					<th class="bg-info text-white">CODE</th>
+					<th th:text="${po.orderCode}"></th>
+				
+					<th class="bg-info text-white">STATUS</th>
+					<th th:text="${po.status}"></th>
+				</tr>
+			</table>
+			<hr/>
+			
+			
+			<form th:action="@{/po/addPart}" method="POST">
+				<div class="row">
+					<div class="col-6">
+						<label>Choose Part</label>
+						<select name="part.id" id="partId" class="form-control">
+							<option th:each="ob:${parts}" 
+								th:value="${ob.key}" 
+								th:text="${ob.value}">
+								</option>
+						</select>
+					</div>
+					<div class="col-3">
+						<label>Quantity</label>
+						<input type="number" name="qty" id="qty" class="form-control" required min="1"/>
+					</div>
+					<div class="col-3">
+						 <input type="hidden" name="po.id" id="poId" th:value="${po.id}"/>
+						 <button type="submit" class="btn btn-success" >
+                    	Add <i class="fa fa-plus-square" aria-hidden="true"></i>
+                    </button>
+					</div>
+				</div>
+			</form>
+			
+			<hr/>
+			<table class="table table-hover">
+				<tr>
+					<th>SLNO</th>
+					<th>PART</th>
+					<th>COST</th>
+					<th>QUANITYT</th>
+					<th>OPERATION</th>
+				</tr>
+				<tr th:each="ob,i:${list}">
+					<td th:text="${i.count}"></td>
+					<td th:text="${ob.part.partCode}"></td>
+					<td th:text="${ob.part.partBaseCost}"></td>
+					<td th:text="${ob.qty}"></td>
+					<td><a class="btn btn-warning" th:href="@{/po/removePart(poId=${po.id},dtlId=${ob.id})}">REMOVE <i class="fa fa-minus-circle" aria-hidden="true"></i></a></td>
+				</tr>
+			</table>
+		</div>
+			
+
+	</div> <!-- card end -->
+</div>
+	<!-- container end -->
+	
+</body>
+</html>

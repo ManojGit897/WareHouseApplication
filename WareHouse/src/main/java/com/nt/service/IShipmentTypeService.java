@@ -1,6 +1,7 @@
 package com.nt.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.nt.model.ShipmentType;
 
@@ -15,5 +16,11 @@ public interface IShipmentTypeService {
 	 boolean isShipmentTypeCodeExitForEdit(String code,Integer id);
 	 
 	 List<Object[]> getShipmentTypeModeAndCount();
+	 
+	 Map<Integer, String> getShipmentIdAndCodeByEnable(String enable);
+	 
+	 
+	
+	
 }   
 

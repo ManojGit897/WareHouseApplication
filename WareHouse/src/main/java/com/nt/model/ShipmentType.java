@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.sun.istack.NotNull;
+
 import lombok.Data;
 
 
@@ -21,19 +23,32 @@ public class ShipmentType{
 	@Column(name="ship_id_col")
 	private Integer id;
 	
-	@Column(name="ship_mode_col")
+	
+	@Column(name="ship_mode_col",
+			nullable = false,
+			length = 16
+			 )
+	       
 	private String shipMode;
 	
-	@Column(name="ship_code_col")
+	@Column(name="ship_code_col",
+			nullable = false,
+			length = 16,
+			unique = true)
 	private String shipCode;
 	
-	@Column(name="ship_enable_col")
+	@Column(name="ship_enable_col",nullable = false,
+			length = 16)
 	private String enableShip;
 	
-	@Column(name="ship_grade_col")
+	@Column(name="ship_grade_col",  
+			nullable = false,
+			length = 12)
 	private String shipGrade;
 	
-	@Column(name="ship_desc_col")
+	@Column(name="ship_desc_col",
+			nullable = false,
+			length = 120)
 	private String shipDesc;
 
 }

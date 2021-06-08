@@ -1,0 +1,167 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+   <title>WELCOME TO ORDER METHOD EDIT PAGE</title>
+</head>
+
+<body>
+      <div th:insert="fragments/commonui :: userheader"></div>
+	<div th:insert="fragments/commonui :: usermenu"></div>
+	<div th:insert="fragments/commonui :: userfooter"></div>
+	
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header bg-primary text-white text-center">
+                <h3>WELCOME TO WH USER TYPE EDIT PAGE</h3>
+            </div>
+            <div class="card-body">
+                <form id="whUtForm" th:action="@{/ut/update}" method="POST" th:object="${whusertype}">
+                	 
+                	 <!-- Row#0 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>User ID</label>
+                        </div>
+                        <div class="col-4">
+                            <input th:field="*{id}" class="form-control" readonly/>
+                        </div>
+                        </div>
+                	 
+                	 
+                	  <!-- Row#1 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>User Type</label>
+                        </div>
+                        <div class="col-4">
+                            <input type="radio" th:field="*{userType}" id="userType1" value="Vendor"/> Vendor
+                            <input type="radio" th:field="*{userType}" id="userType2" value="Customer"/> Customer
+                        </div>
+                        <div class="col-5">
+                            <span id="userTypeError"></span>
+                        </div>
+                    </div>
+                    
+                    
+                    <!-- Row#2 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>User Code</label>
+                        </div>
+                        <div class="col-4">
+                            <input type="text" th:field="*{userCode}" id="userCode" class="form-control" />
+                        </div>
+                        <div class="col-5">
+                            <span id="userCodeError"></span>
+                        </div>
+                    </div>
+                
+                     <!-- Row#3 -->
+                     <div class="row">
+                        <div class="col-3">
+                            <label>User For</label>
+                        </div>
+                        <div class="col-4">
+                            <input type="text" value="" th:field="*{userFor}" id="userFor" class="form-control"  readonly />
+                        </div>
+                        <div class="col-5">
+                            <span id="userForError"></span>
+                        </div>
+                    </div>
+                       <!-- Row#4 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>User Email</label>
+                        </div>
+                        <div class="col-4">
+                            <input type="email" th:field="*{userEmail}" id="userEmail" class="form-control"/>
+                        </div>
+                        <div class="col-5">
+                            <span id="userEmailError"></span>
+                        </div>
+                    </div>
+                
+                      <!-- Row#5 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>User Contact</label>
+                        </div>
+                        <div class="col-4">
+                            <input type="text" th:field="*{userContact}" id="userContact" class="form-control"/>
+                        </div>
+                        <div class="col-5">
+                            <span id="userContactError"></span>
+                        </div>
+                    </div>
+                
+                
+                    <!-- Row#6 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>User Id Type</label>
+                        </div>
+                        <div class="col-4">
+                            <select th:field="*{userIdType}" id="userIdType" class="form-control">
+                                <option value="">-SELECT-</option>
+                                <option value="PAN CARD">PAN CARD</option>
+                                <option value="AADHAR">AADHAR</option>
+                                <option value="VOTER ID">VOTER ID</option>
+                                <option value="OTHER">OTHER</option>
+                            </select>
+
+                         
+                        </div>
+                        <div class="col-5">
+                            <span id="userIdTypeError"></span>
+                        </div>
+                    </div>
+
+                     <!-- Row#7 -->
+                     <div class="row" id="ifOtherSec">
+                        <div class="col-3">
+                            <label>If Other</label>
+                        </div>
+                        <div class="col-4">
+                            <input type="text" th:field="*{ifOther}" id="ifOther" class="form-control"/>
+                        </div>
+                        <div class="col-5">
+                            <span id="ifOtherError"></span>
+                        </div>
+                    </div>
+
+                   
+
+                    <!-- Row#8 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>ID Number</label>
+                        </div>
+                        <div class="col-4">
+                            <input type="text" th:field="*{userIdNum}" id="userIdNum" class="form-control"/>
+                        </div>
+                        <div class="col-5">
+                            <span id="userIdNumError"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success" >
+                    	Update User <i class="fa fa-plus-square" aria-hidden="true"></i>
+                    </button>
+                    
+                </form>
+            </div>
+            <!-- card body end -->
+             <div class="card-footer text-center" th:if="${message!=null}">
+                <span class="text-success" th:text="${message}"></span>
+            </div> <!--  footer end -->
+        </div>
+        <!-- card end -->
+    </div>
+    <!-- container end -->
+    <script type="text/javascript" th:src="@{/myjs/whut.js}"></script>
+       
+       
+
+</body>
+
+ </html>

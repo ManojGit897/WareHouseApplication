@@ -1,0 +1,151 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+         <title>WELCOME TO PART REGISTER PAGE</title> 
+</head>
+
+<body>
+
+     <div th:insert="fragments/commonui :: userheader"></div>
+	<div th:insert="fragments/commonui :: usermenu"></div>
+	<div th:insert="fragments/commonui :: userfooter"></div>
+	
+    <div class="container">
+        <div class="card">
+            <div class="card-header bg-primary text-white text-center">
+                <h3>WELCOME TO PART EDIT PAGE</h3>
+            </div>
+            <div class="card-body">
+                <form id="myPartForm" th:action="@{/part/update}" method="POST" th:object="${part}">
+                	<!-- Row#1 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>PART CODE</label>
+                        </div>
+                        <div class="col-4">
+                            <input th:field="*{partCode}" id="partCode" class="form-control" />
+                        </div>
+                        <div class="col-5">
+                            <span id="partCodeError"></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Row#2 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>PART DIMENSIONS</label>
+                        </div>
+                        
+                        <div class="col-1">
+                           W: <input th:field="*{partWid}" id="partWid" class="form-control" size="3" /></div>
+                           <div class="col-1">L: <input th:field="*{partLen}" id="partLen" class="form-control" size="3" /></div>
+                          <div class="col-1"> H: <input th:field="*{partHt}" id="partHt" class="form-control" size="3" /></div>
+                        
+                        <div class="col-5">
+                            <span id="partDimsError"></span>
+                        </div>
+                    </div>
+                	
+                	<!-- Row#3 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>BASE COST</label>
+                        </div>
+                        <div class="col-4">
+                            <input th:field="*{partBaseCost}" id="partBaseCost" class="form-control" />
+                        </div>
+                        <div class="col-5">
+                            <span id="partBaseCostError"></span>
+                        </div>
+                    </div>
+                
+                    <!-- Row#4 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>BASE CURRENCY</label>
+                        </div>
+                        <div class="col-4">
+                            <select th:field="*{partCurrency}" id="partCurrency" class="form-control">
+                                <option value="">-SELECT-</option>
+                                <option value="IND">IND</option>
+                                <option value="AUD">AUD</option>
+                                <option value="USD">USD</option>
+                            </select>
+                        </div>
+                        <div class="col-5">
+                            <span id="partCurrencyError"></span>
+                        </div>
+                    </div>
+                    
+                    
+                    <!-- Row#5 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>UOM</label>
+                        </div>
+                        <div class="col-4">
+                            <select th:field="*{uom.uomModel}" id="uomId" class="form-control">
+                                <option value="">-SELECT-</option>
+                                <option th:each="ob:${uoms}"
+                                	th:value="${ob.key}"
+                                	th:text="${ob.value}"
+                                > </option>
+                            </select>
+                        </div>
+                        <div class="col-5">
+                            <span id="uomError"></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Row#6 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Order Method</label>
+                        </div>
+                        <div class="col-4">
+                            <select th:field="*{om.id}" id="omId" class="form-control">
+                                <option value="">-SELECT-</option>
+                                <option th:each="ob:${oms}"
+                                	th:value="${ob.key}"
+                                	th:text="${ob.value}"
+                                > </option>
+                            </select>
+                        </div>
+                        <div class="col-5">
+                            <span id="omError"></span>
+                        </div>
+                    </div>
+
+                    <!-- Row#7 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Description</label>
+                        </div>
+                        <div class="col-4">
+                            <textarea th:field="*{partDesc}" id="partDesc" class="form-control"></textarea>
+                        </div>
+                        <div class="col-5">
+                            <span id="partDescError"></span>
+                        </div>
+                    </div>
+                    
+                    
+                    <button type="submit" class="btn btn-success" >
+                    	ADD PART <i class="fa fa-plus-square" aria-hidden="true"></i>
+                    </button>
+                    
+                </form>
+            </div>
+            <!-- card body end -->
+             <div class="card-footer text-center" th:if="${message!=null}">
+                <span class="text-success" th:text="${message}"></span>
+            </div> <!--  footer end -->
+        </div>
+        <!-- card end -->
+    </div>
+    <!-- container end -->
+    <script type="text/javascript" th:src="@{/myjs/parts.js}"></script>
+
+</body>
+
+</html>

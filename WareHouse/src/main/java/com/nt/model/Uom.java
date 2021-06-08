@@ -24,13 +24,20 @@ public class Uom {
 	@Column(name="uom_id_col")
 	private Integer id;
 	
-	@Column(name="uom_type_col")
+	@Column(name="uom_type_col",
+			nullable = false,
+			length = 20)
 	private String uomType;
 	
-	@Column(name="uom_model_col")
+	@Column(name="uom_model_col",
+			nullable = false,
+			length = 20,
+			unique = true)
 	private String uomModel;
 	
-	@Column(name="uom_desc_col")
+	@Column(name="uom_desc_col",
+			nullable = false,
+			length = 220)
 	private String uomDesc;
 
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.nt.exception.OrderMethodNotFound;
@@ -57,6 +58,7 @@ public class OrderMethodController {
 		catch (Exception e) {
 			LOG.error("UNABLE TO SAVE {}",e.getMessage());
 			e.printStackTrace();
+			 model.addAttribute("message"," Unable to process request Due to duplicate Data" );
 		}
 		LOG.info("ABOUT TO LEAVE SAVE METHOD");
 		return "OrderMethodRegister";
@@ -150,6 +152,25 @@ public class OrderMethodController {
 			
 			return "redirect:all";
 		}	
+		
+		
+		
+	//  7.Ajax validations 
+		@GetMapping("/validate")
+		@ResponseBody
+		public String validateOrderMethodCode(@RequestParam String code,
+				                                 @RequestParam Integer id) {
+			
+			String message="";
+			if(id==0 && service.isOrderMethodCodeExit(code)) {
+				message=code+" already exit";
+			}
+			else if(id!=0 && service.isOrderMethodCodeExitForEdit(code,id)){
+				message=code+" already exit";
+			}
+			return message;
+			
+		}
 		
 		// 8. Export to Excel
 		@GetMapping("/excel")

@@ -2,6 +2,8 @@ package com.nt.service.impl;
 
 import java.util.List
 ;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +11,7 @@ import com.nt.exception.ShipmentTypeNotFoundException;
 import com.nt.model.ShipmentType;
 import com.nt.repo.ShipmentTypeRepository;
 import com.nt.service.IShipmentTypeService;
+import com.nt.util.MyAppUtil;
 
 @Service
 public class ShipmentTypeServiceImpl implements IShipmentTypeService {
@@ -81,6 +84,16 @@ public class ShipmentTypeServiceImpl implements IShipmentTypeService {
 		
 		return repo.getShipmentTypeModeAndCount();
 	}
+
+	@Override
+	public Map<Integer, String> getShipmentIdAndCodeByEnable(String enable) {
+		
+		List<Object[]> list =  repo.getShipmentIdAndCodeByEnable(enable);
+		return MyAppUtil.convertListToMap(list);
+		
+	}
+
+	
 
 	
 	

@@ -1,0 +1,38 @@
+
+  <html xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+  <body>
+    <div class="container">
+      <div class="card">
+        <div class="card-header bg-primary text-white text-center">
+          <h3>EMAIL SERVICE FROM WAHRESHOUSE APPLICATION!</h3>
+        </div>
+
+        <div class="card-body">
+          <div class="row">
+            <div class="col-4 bg-info text-white">USER NAME</div>
+            <div class="col-8">{{username}}</div>
+          </div>
+
+          <div class="row">
+            <div class="col-4 bg-info text-white">USER TYPE</div>
+            <div class="col-8">{{usrtype}}</div>
+          </div>
+          <div class="row">
+            <div class="col-4 bg-info text-white">USER CONTACT</div>
+            <div class="col-8">{{usrcontact}}</div>
+          </div>
+        </div>
+      </div>
+      <!-- card end -->
+    </div>
+    <!-- container end -->
+    </body>
+</html>
+    

@@ -1,6 +1,8 @@
 package com.nt.service.impl;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -70,5 +72,19 @@ public class OrderMethodServiceImpl implements IOrderMethodService {
 		
 		return repo.getorderTypeAndCount();
 	}
+
+	@Override
+	public Map<Integer, String> getOrderMethodIdAndCount() {
+		List<Object[]> list=repo.getOrderMethodIdAndCount();
+		
+		 //JDK 1.8
+				return list.stream()
+						.collect(
+								Collectors.toMap(
+										ob->(Integer)ob[0], ob->(String)ob[1])
+								);
+	}
+
+	
 
 }

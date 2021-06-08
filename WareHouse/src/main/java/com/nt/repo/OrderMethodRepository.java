@@ -19,5 +19,7 @@ public interface OrderMethodRepository extends JpaRepository<OrderMethod,Integer
 			@Query("SELECT orderType, count(orderType) FROM OrderMethod GROUP BY orderType")
 			List<Object[]> getorderTypeAndCount();
 	
+		@Query("select id,orderCode from OrderMethod")
+	     List<Object[]> getOrderMethodIdAndCount();
 	
 }

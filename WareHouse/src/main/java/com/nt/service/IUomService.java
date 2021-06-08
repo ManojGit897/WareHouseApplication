@@ -1,6 +1,7 @@
 package com.nt.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.nt.model.Uom;
 
@@ -15,4 +16,6 @@ public interface IUomService {
 	 boolean isUomModelExitForEdit(String model,Integer id);
 	 
 	 List<Object[]> getUomTypeAndCount();
+	 
+	 Map<Integer,String> getUomIdAndModel();
 }

@@ -1,0 +1,61 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+<title>WELCOME TO ORDER METHOD DATA PAGE</title>	
+</head>
+
+<body>
+    <div th:insert="fragments/commonui :: userheader"></div>
+	<div th:insert="fragments/commonui :: usermenu"></div>
+	<div th:insert="fragments/commonui :: userfooter"></div>
+	
+	<div class="container">
+	
+	
+	<div class="card-header bg-primary text-white text-center">
+			<h3>WH USER TYPE DATA PAGE !</h3>
+		</div>
+
+		<div class="card-body">
+			<a th:href="@{/ut/excel}" class="btn btn-success">Excel <i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
+			<a th:href="@{/ut/charts}" class="btn btn-info" >Charts </a>
+			<table class="table table-hover">
+				<tr class="bg-info text-white">
+					<th>ID</th>
+					<th>USER TYPE</th>
+					<th>CODE</th>
+					<th>USER FOR</th>
+					<th>EMAIL</th>
+					<th>CONTACT NUM</th>
+					<th>ID TYPE</th>
+					<th>IF OTHER ID</th>
+					<th>ID NUMBER</th>
+					<th>OPERATIONS</th>
+				</tr>
+				<tr th:each="ob:${list}">
+					<td th:text="${ob.id}"></td>
+					<td th:text="${ob.userType}"></td>
+					<td th:text="${ob.userCode}"></td>
+					<td th:text="${ob.userFor}"></td>
+					<td th:text="${ob.userEmail}"></td>
+					<td th:text="${ob.userContact}"></td>
+					<td th:text="${ob.userIdType}"></td>
+					<td th:text="${ob.ifOther}"></td>
+					<td th:text="${ob.userIdNum}"></td>
+					<td>
+						<a th:href="@{/ut/delete(id=${ob.id})}" class="btn btn-danger"> DELETE <i class="fa fa-trash-o" aria-hidden="true"></i> </a>|
+						<a th:href="@{/ut/edit(id=${ob.id})}" class="btn btn-warning">EDIT <i class="fa fa-pencil" aria-hidden="true"></i></a>
+					</td>
+				</tr>
+			</table>
+		</div>
+			
+			<div class="card-footer bg-success text-white" th:if="${message!=null}">
+				<span th:text="${message}"></span>
+			</div>
+
+		</div> <!-- card end -->
+	</div>
+	<!-- container end -->
+</body>
+</html>

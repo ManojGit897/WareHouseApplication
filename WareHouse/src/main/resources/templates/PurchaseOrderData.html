@@ -1,0 +1,52 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+	<title>PO DATA PAGE</title>
+</head>
+
+<body>
+	<div th:insert="fragments/commonui :: userheader"></div>
+	<div th:insert="fragments/commonui :: usermenu"></div>
+	<div th:insert="fragments/commonui :: userfooter"></div>
+
+	<div class="container">
+	
+	<div class="card-header bg-primary text-white text-center">
+			<h3>PO DATA PAGE</h3>
+		</div>
+
+		<div class="card-body">
+			<a th:href="@{/po/excel}" class="btn btn-success">Excel <i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
+			<table class="table table-hover">
+				<tr class="bg-info text-white">
+					<th>ID</th>
+					<th>CODE</th>
+					<th>SHIPMENT</th>
+					<th>VENDOR</th>
+					<th>REF NUM</th>
+					<th>QUALITY CHECK</th>
+					<th>STATUS</th>
+					<th>DESCRIPTION</th>
+					<th>OPERATIONS</th>
+				</tr>
+				<tr th:each="ob:${list}">
+					<td th:text="${ob.id}"></td>
+					<td th:text="${ob.orderCode}"></td>
+					<td th:text="${ob.st.shipCode}"></td>
+					<td th:text="${ob.vendor.userCode}"></td>
+					<td th:text="${ob.refNum}"></td>
+					<td th:text="${ob.qltyChck}"></td>
+					<td th:text="${ob.status}"></td>
+					<td th:text="${ob.description}"></td>
+					<td>
+						<a th:href="@{/po/parts(id=${ob.id})}" class="btn btn-success">ADD PART <i class="fa fa-cart-plus" aria-hidden="true"></i></a>				
+					</td>
+				</tr>
+			</table>
+		</div>
+			
+
+	</div>
+	<!-- container end -->
+</body>
+</html>

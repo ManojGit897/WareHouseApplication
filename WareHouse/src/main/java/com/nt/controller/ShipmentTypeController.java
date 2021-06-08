@@ -62,6 +62,7 @@ public class ShipmentTypeController {
 		catch (Exception e) {
 			LOG.error(" Unable to process request due to {}",e.getMessage());
 		    e.printStackTrace();
+		    model.addAttribute("message"," Unable to process request Due to duplicate Data" );
 		}
 		LOG.info("ABOUT GO TO UI PAGE !");
 		// goto UI page---------

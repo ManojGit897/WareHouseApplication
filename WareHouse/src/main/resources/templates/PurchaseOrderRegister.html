@@ -1,0 +1,136 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+	<title>PO REGISTER PAGE</title>
+</head>
+
+<body>
+	<div th:insert="fragments/commonui :: userheader"></div>
+	<div th:insert="fragments/commonui :: usermenu"></div>
+	<div th:insert="fragments/commonui :: userfooter"></div>
+
+    <div class="container">
+        
+            <div class="card-header bg-primary text-white text-center">
+                <h3>WELCOME TO PO REGISTER PAGE</h3>
+            </div>
+            <div class="card-body">
+                <form id="myPoForm" th:action="@{/po/save}" method="POST">
+                    <!-- Row#1 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>ORDER CODE</label>
+                        </div>
+                        <div class="col-4">
+                            <input type="text" name="orderCode" id="orderCode" class="form-control"/>
+                        </div>
+                        <div class="col-5">
+                            <span id="orderCodeError"></span>
+                        </div>
+                    </div>
+                    
+                    
+                    <!-- Row#Integration -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Shipment Code</label>
+                        </div>
+                        <div class="col-4">
+                           <select name="st.id" id="stId" class="form-control">
+                           		<option value="">-SELECT-</option>
+                           		<option th:each="ob:${sts}" th:value="${ob.key}"
+                           			th:text="${ob.value}"></option>
+                           </select>
+                        </div>
+                        <div class="col-5">
+                            <span id="stIdError"></span>
+                        </div>
+                    </div>
+                    
+                    
+                     <!-- Row#Integration -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Vendor</label>
+                        </div>
+                        <div class="col-4">
+                           <select name="vendor.id" id="vendorId" class="form-control">
+                           		<option value="">-SELECT-</option>
+                           		<option th:each="ob:${vendors}" th:value="${ob.key}"
+                           			th:text="${ob.value}"></option>
+                           </select>
+                        </div>
+                        <div class="col-5">
+                            <span id="vendorError"></span>
+                        </div>
+                    </div>
+                    
+
+                    <!-- Row#2 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Reference Number</label>
+                        </div>
+                        <div class="col-4">
+                            <input name="refNum" id="refNum" class="form-control" />
+                        </div>
+                        <div class="col-5">
+                            <span id="refNumError"></span>
+                        </div>
+                    </div>
+                    
+                    
+                     <!-- Row#3 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Quality Check</label>
+                        </div>
+                        <div class="col-4">
+                            <input type="radio" name="qltyChck" id="qltyChck1"  value="Required"/> Required
+                            <input type="radio" name="qltyChck" id="qltyChck2"  value="Not Required"/> Not Required
+                        </div>
+                        <div class="col-5">
+                            <span id="qltyChckError"></span>
+                        </div>
+                    </div>
+                    
+                     <!-- Row#4 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>DEFAULT STATUS</label>
+                        </div>
+                        <div class="col-4">
+                            <input name="status" id="status" class="form-control" value="OPEN" readonly />
+                        </div>
+                    </div>
+
+                    <!-- Row#5 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Description</label>
+                        </div>
+                        <div class="col-4">
+                            <textarea name="description" id="description" class="form-control"></textarea>
+                        </div>
+                        <div class="col-5">
+                            <span id="descriptionError"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success" >
+                    	Add Purchase Order <i class="fa fa-plus-square" aria-hidden="true"></i>
+                    </button>
+                    
+                </form>
+            </div>
+            <!-- card body end -->
+             <div class="card-footer text-center" th:if="${message!=null}">
+                <span class="text-success" th:text="${message}"></span>
+            </div> <!--  footer end -->
+       
+    </div>
+    <!-- container end -->
+    <script type="text/javascript" th:src="@{/myjs/po.js}"></script>
+	
+</body>
+
+</html>

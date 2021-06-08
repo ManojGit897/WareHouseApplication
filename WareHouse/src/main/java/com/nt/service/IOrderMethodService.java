@@ -1,6 +1,8 @@
 package com.nt.service;
 
 import java.util.List;
+import java.util.Map;
+
 import com.nt.model.OrderMethod;
 
 public interface IOrderMethodService {
@@ -14,4 +16,6 @@ public interface IOrderMethodService {
 	 boolean isOrderMethodCodeExitForEdit(String code,Integer id);
 	 
 	 List<Object[]> getorderTypeAndCount();
+	 
+	 Map<Integer, String> getOrderMethodIdAndCount();
 }
