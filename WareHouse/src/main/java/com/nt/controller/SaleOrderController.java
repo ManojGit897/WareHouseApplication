@@ -131,8 +131,7 @@ public class SaleOrderController {
 		
 		@PostMapping("/addPart")
 		public String addPart(SaleOrderDtl sdtl){
-			service.saveSaleOrderDtl(sdtl);
-			   
+			service.saveSaleOrderDtl(sdtl); 
 			Integer soId=sdtl.getSo().getId();
 			
 			if(SaleOrderStatus.SALE_OPEN.name()
