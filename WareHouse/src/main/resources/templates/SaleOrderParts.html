@@ -27,7 +27,7 @@
 			</table>
 			<hr/>
 			
-			<form th:action="@{/sale/addPart}" method="POST">
+			<form th:if="${so.status=='SALE_READY'|| so.status=='SALE_OPEN'}" th:action="@{/sale/addPart}" method="POST">
 				<div class="row">
 					<div class="col-6">
 						<label>Choose Part</label>
@@ -58,16 +58,30 @@
 					<th>PART</th>
 					<th>COST</th>
 					<th>QUANITYT</th>
-					<th>OPERATION</th>
+					<th th:if="${so.status == 'SALE_READY'}">OPERATION</th>
 				</tr>
 				<tr th:each="ob,i:${list}">
 					<td th:text="${i.count}"></td>
 					<td th:text="${ob.part.partCode}"></td>
 					<td th:text="${ob.part.partBaseCost}"></td>
-					<td th:text="${ob.qty}"></td>
-					<td><a class="btn btn-warning" th:href="@{/sale/removePart(soId=${so.id},dtlId=${ob.id})}">REMOVE <i class="fa fa-minus-circle" aria-hidden="true"></i></a></td>
+					<!-- <td th:text="${ob.qty}"></td> -->
+					<td>
+						<span th:text="${ob.qty}"></span>
+						<a th:if="${so.status == 'SALE_READY'}" th:href="@{/sale/increaseQty(soId=${so.id},dtlId=${ob.id})}" class="btn btn-success">+</a>
+						<span th:if="${ob.qty>1&& (so.status == 'SALE_READY')}">
+							<a th:href="@{/sale/reduceQty(soId=${so.id},dtlId=${ob.id})}" class="btn btn-danger">-</a>
+						</span>
+					</td>
+					<td>
+					<a  th:if="${so.status == 'SALE_READY'}" class="btn btn-warning" th:href="@{/sale/removePart(soId=${so.id},dtlId=${ob.id})}">REMOVE <i class="fa fa-minus-circle" aria-hidden="true"></i></a>
+					</td>
 				</tr>
 			</table>
+			<hr/>
+			<div th:if="${so.status=='SALE_READY'}" align="center">
+			<a th:href="@{/sale/placeorder(soId=${so.id})}" class="btn btn-primary" > PLACE ORDER</a>
+			
+			</div>
 			
 			
 		</div>

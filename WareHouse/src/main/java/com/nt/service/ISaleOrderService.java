@@ -2,6 +2,7 @@
 package com.nt.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.nt.model.SaleOrder;
 import com.nt.model.SaleOrderDtl;
@@ -18,15 +19,16 @@ public interface ISaleOrderService {
 	boolean isSaleOrderCodeExistForEdit(String code,Integer id);
 	
 	//for status read and update
-		String getCurrentStatusOfSo(Integer poId);
-		void updateSoStatus(Integer poId,String newStatus);
-		Integer getSaleOrderDtlsCountByPoId(Integer poId);
+		String getCurrentStatusOfSo(Integer soId);
+		void updateSoStatus(Integer soId,String newStatus);
+		Integer getSaleOrderDtlsCountBySoId(Integer soId);
 	
 	///------------ for Screen#2----------------
 	
 	Integer saveSaleOrderDtl(SaleOrderDtl sdtl);
 	
-	List<SaleOrderDtl> getSaleOrderDtlsByPoId(Integer id);
-	void deleteSaleOrderDtl(Integer dtlId);
-	
-}
+	List<SaleOrderDtl> getSaleOrderDtlsBySoId(Integer id);
+	void deleteSaleOrderDtl(Integer dtlId);	
+	Optional<SaleOrderDtl> getSaleOrderDtlByPartIdAndSoId(Integer partId, Integer soId);
+	Integer updateSaleOrderDtlQtyByDtlId(Integer newQty,Integer dtlId);
+}                                                                               

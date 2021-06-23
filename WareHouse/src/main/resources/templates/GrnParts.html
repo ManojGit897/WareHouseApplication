@@ -1,0 +1,59 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+	<title>GRN DATA PAGE</title>
+</head>
+
+<body>
+	<div th:insert="fragments/commonui :: userheader"></div>
+	<div th:insert="fragments/commonui :: usermenu"></div>
+	<div th:insert="fragments/commonui :: userfooter"></div>
+
+	<div class="container">
+	<div class="card">
+	<div class="card-header bg-primary text-white text-center">
+			<h3>GRN PARTS PAGE</h3>
+		</div>
+
+		<div class="card-body">
+			<table class="table table-hover">
+				<tr>
+					<th class="bg-warning text-white">GRN CODE</th> <td th:text="${grn.grnCode}"></td>
+					<th class="bg-warning text-white">ORDER CODE</th> <td th:text="${grn.po.orderCode}"></td>
+				</tr>
+			</table>
+			<hr/>
+			<table class="table table-hover">
+				<tr class="bg-info text-white">
+					<th>#</th>
+					<th>PART CODE</th>
+					<th>BASE COST</th>
+					<th>QUANTITY</th>
+					<th>LINE VALUE</th>
+					
+					<th>OPERATIONS</th>
+				</tr>
+				<tr th:each="ob,i:${list}">
+					<td th:text="${i.count}"></td>
+					<td th:text="${ob.partCode}"></td>
+					<td th:text="${ob.baseCost}"></td>
+					<td th:text="${ob.qty}"></td>
+					<td th:text="${ob.baseCost * ob.qty}"></td>
+					<td>
+			            <th:block th:if="${ob.status==null}">
+                        <a th:href="@{/grn/accept(id=${grn.id},dtlId=${ob.id})}" class="btn btn-success"> ACCEPT </a> |
+                        <a th:href="@{/grn/reject(id=${grn.id},dtlId=${ob.id})}" class="btn btn-danger"> REJECT </a> 
+                         </th:block>
+                          <th:block th:if="${ob.status!=null}">
+	                              <b th:text="${ob.status}"></b>
+                          </th:block>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		</div> <!-- card end -->
+	</div>
+	<!-- container end -->
+</body>
+</html>

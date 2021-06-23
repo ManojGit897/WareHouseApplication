@@ -19,7 +19,8 @@ public class SaleOrderDtl {
 	
 	@Id
 	@GeneratedValue(generator = "sdt1_gen")
-	@SequenceGenerator(name="sdt1_gen",sequenceName = "pdtl_seq")
+	@SequenceGenerator(name="sdt1_gen",sequenceName = "sdtl_seq")
+	@Column(name="so_dlt_id_col")
 	private Integer id;
 	
 	@Column(name="so_dlt_qty_col")

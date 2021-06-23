@@ -1,6 +1,8 @@
 package com.nt.service.impl;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -12,6 +14,7 @@ import com.nt.model.PurchaseOrder;
 import com.nt.repo.PurchaseDtlRepository;
 import com.nt.repo.PurchaseOrderRepository;
 import com.nt.service.IPurchaseOrderService;
+import com.nt.util.MyAppUtil;
 
 
 @Service
@@ -21,7 +24,7 @@ public class PurchaseOrderServiceImpl implements IPurchaseOrderService {
 	private PurchaseOrderRepository repo; //HAS-A
 	
 	@Autowired
-	private PurchaseDtlRepository dt1Repo;
+	private PurchaseDtlRepository dtlRepo; // HAS-A
 
 	@Override
 	public Integer savePurchaseOrder(PurchaseOrder po) {
@@ -52,19 +55,19 @@ public class PurchaseOrderServiceImpl implements IPurchaseOrderService {
 	public Integer savePurchaseDtl(PurchaseDtl pdt1) {
 		
 		
-		return dt1Repo.save(pdt1).getId();
+		return dtlRepo.save(pdt1).getId();
 	}
 
 	@Override
 	public List<PurchaseDtl> getPurchaseDt1sByPoId(Integer id) {
 		
-		return dt1Repo.getPurchaseDt1ByPoId(id);
+		return dtlRepo.getPurchaseDt1ByPoId(id);
 	}
 
 	@Override
 	public void deletePurchaseDtl(Integer dtlId) {
-		if(dt1Repo.existsById(dtlId)) {
-			dt1Repo.deleteById(dtlId);
+		if(dtlRepo.existsById(dtlId)) {
+			dtlRepo.deleteById(dtlId);
 		}
 		
 	}
@@ -86,7 +89,25 @@ public class PurchaseOrderServiceImpl implements IPurchaseOrderService {
 	@Override
 	public Integer getPurchaseDtlsCountByPoId(Integer poId) {
 		
-		return dt1Repo.getPurchaseDtlsCountByPoId(poId);
+		return dtlRepo.getPurchaseDtlsCountByPoId(poId);
+	}
+
+	@Override
+	public Optional<PurchaseDtl> getPurchaseDtlByPartIdAndPoId(Integer partId, Integer poId) {
+		
+		return dtlRepo.getPurchaseDtlByPartIdAndPoId(partId, poId);
+	}
+	@Transactional
+	@Override
+	public Integer updatePurchaseDtlQtyByDtlId(Integer newQty, Integer dtlId) {
+		
+		return dtlRepo.updatePurchaseDtlQtyByDtlId(newQty, dtlId);
+	}
+
+	@Override
+	public Map<Integer, String> getPoIdAndCodesByStatus(String status) {
+		List<Object[]> list = repo.getPoIdAndCodesByStatus(status);
+		return MyAppUtil.convertListToMap(list);
 	}
 
 	

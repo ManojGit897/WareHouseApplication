@@ -23,8 +23,8 @@ import com.nt.service.IShipmentTypeService;
 import com.nt.util.ShipmentTypeUtil;
 import com.nt.view.ShipmentTypeExcelView;
 
-@Controller
-@RequestMapping("/st")
+    @Controller
+    @RequestMapping("/st")
 public class ShipmentTypeController {
 
 	private static final Logger LOG=LoggerFactory.getLogger(ShipmentTypeController.class);

@@ -1,0 +1,96 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+	<title>GRN REGISTER PAGE</title>
+</head>
+
+<body>
+	<div th:insert="fragments/commonui :: userheader"></div>
+	<div th:insert="fragments/commonui :: usermenu"></div>
+	<div th:insert="fragments/commonui :: userfooter"></div>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header bg-primary text-white text-center">
+                <h3>WELCOME TO GRN REGISTER PAGE</h3>
+            </div>
+            <div class="card-body">
+                <form id="myUomForm" th:action="@{/grn/save}" method="POST">
+               		 <!-- Row#1 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>GRN CODE</label>
+                        </div>
+                        <div class="col-4">
+                            <input name="grnCode" id="grnCode" class="form-control" />
+                        </div>
+                        <div class="col-5">
+                            <span id="grnCodeError"></span>
+                        </div>
+                    </div>
+                    
+                    
+                    <!-- Row#2 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>GRN TYPE</label>
+                        </div>
+                        <div class="col-4">
+                            <input name="grnType" id="grnType" class="form-control" />
+                        </div>
+                        <div class="col-5">
+                            <span id="grnTypeError"></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Row#3 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>ORDER CODE</label>
+                        </div>
+                        <div class="col-4">
+                            <select name="po.id" id="poId" class="form-control">
+                                <option value="">-SELECT-</option>
+                               	<option th:each="ob:${pos}"
+                               	    th:value="${ob.key}"
+                               		th:text="${ob.value}"
+                               	> </option>
+                            </select>
+                        </div>
+                        <div class="col-5">
+                            <span id="Error"></span>
+                        </div>
+                    </div>
+
+                    
+                    <!-- Row#4 -->
+                    <div class="row">
+                        <div class="col-3">
+                            <label>Description</label>
+                        </div>
+                        <div class="col-4">
+                            <textarea name="grnDescription" id="grnDescription" class="form-control"></textarea>
+                        </div>
+                        <div class="col-5">
+                            <span id="grnDescriptionError"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success" >
+                    	Add GRN <i class="fa fa-plus-square" aria-hidden="true"></i>
+                    </button>
+                    
+                </form>
+            </div>
+            <!-- card body end -->
+             <div class="card-footer text-center" th:if="${message!=null}">
+                <span class="text-success" th:text="${message}"></span>
+            </div> <!--  footer end -->
+        </div>
+        <!-- card end -->
+    </div>
+    <!-- container end -->
+    <script type="text/javascript" th:src="@{/myjs/grn.js}"></script>
+	
+</body>
+
+</html>

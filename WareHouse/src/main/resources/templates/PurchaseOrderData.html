@@ -10,7 +10,7 @@
 	<div th:insert="fragments/commonui :: userfooter"></div>
 
 	<div class="container">
-	
+	          <div class="card">
 	<div class="card-header bg-primary text-white text-center">
 			<h3>PO DATA PAGE</h3>
 		</div>
@@ -23,29 +23,47 @@
 					<th>CODE</th>
 					<th>SHIPMENT</th>
 					<th>VENDOR</th>
-					<th>REF NUM</th>
+					<!-- <th>REF NUM</th> -->
 					<th>QUALITY CHECK</th>
 					<th>STATUS</th>
-					<th>DESCRIPTION</th>
+					<!-- <th>DESCRIPTION</th> -->
 					<th>OPERATIONS</th>
 				</tr>
 				<tr th:each="ob:${list}">
 					<td th:text="${ob.id}"></td>
-					<td th:text="${ob.orderCode}"></td>
+					<td th:text="${ob.orderCode}" class="bg-info text-white"></td>
 					<td th:text="${ob.st.shipCode}"></td>
 					<td th:text="${ob.vendor.userCode}"></td>
-					<td th:text="${ob.refNum}"></td>
+					<!-- <td th:text="${ob.refNum}"></td> -->
 					<td th:text="${ob.qltyChck}"></td>
-					<td th:text="${ob.status}"></td>
-					<td th:text="${ob.description}"></td>
+					<td th:text="${ob.status}" class="bg-warning text-white"></td>
+					<!-- <td th:text="${ob.description}"></td> -->
 					<td>
-						<a th:href="@{/po/parts(id=${ob.id})}" class="btn btn-success">ADD PART <i class="fa fa-cart-plus" aria-hidden="true"></i></a>				
+						
+						<a th:href="@{/po/parts(id=${ob.id})}" class="btn btn-success">ADD PART <i class="fa fa-cart-plus" aria-hidden="true"></i></a>
+										
+					    <a th:if="${ob.status=='OPEN'||ob.status=='PICKING'||ob.status=='ORDERED'||(ob.status != 'INVOICED' && ob.status !='CANCELLED')}" th:href="@{/po/cancel(id=${ob.id})}" class="btn btn-danger">CANCEL <i class="fa fa-ban" aria-hidden="true"></i></a>
+					    
+					    <a th:if="${ob.status == 'ORDERED'}" class="btn btn-primary text-white"
+
+                                th:href="@{/po/generate(id=${ob.id})}"> GENERATE
+
+		                        <i class="fa fa-bars" aria-hidden="true"></i>
+
+                          </a>
+                          
+                          <a th:if="${ob.status == 'INVOICED'}" class="btn btn-primary text-white"
+	                                    th:href="@{/po/print(id=${ob.id})}"> PRINT
+	                                   <i class="fa fa-print" aria-hidden="true"></i>
+                          </a>
+					    				
+					    
 					</td>
 				</tr>
 			</table>
 		</div>
 			
-
+     </div>
 	</div>
 	<!-- container end -->
 </body>

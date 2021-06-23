@@ -18,15 +18,14 @@ public interface SaleOrderRepository extends JpaRepository<SaleOrder, Integer>
 	Integer getOrderCodeCountForEdit(String orderCode,Integer id);
 
 	
-	@Query("SELECT status FROM SaleOrder WHERE id=:poId")
-	String getCurrentStatusOfPo(Integer poId);
+	@Query("SELECT status FROM SaleOrder WHERE id=:soId")
+	String getCurrentStatusOfSo(Integer soId);
 
 	@Modifying
-	@Query("UPDATE SaleOrder SET status=:newStatus WHERE id=:poId")
-	void updateSoStatus(Integer poId,String newStatus);
+	@Query("UPDATE SaleOrder SET status=:newStatus WHERE id=:soId")
+	void updateSoStatus(Integer soId,String newStatus);
 	
-	@Query("SELECT count(pdtl) FROM PurchaseDtl pdtl JOIN pdtl.po as purchaseOrder WHERE purchaseOrder.id=:poId")
-	public Integer getSaleOrderDtlsCountByPoId(Integer poId);
+	
 
 	
 }

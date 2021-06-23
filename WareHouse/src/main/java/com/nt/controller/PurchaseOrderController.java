@@ -2,6 +2,8 @@ package com.nt.controller;
 
 import java.util.List;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.nt.consts.PurchaseOrderStatus;
 import com.nt.model.PurchaseDtl;
@@ -18,6 +21,7 @@ import com.nt.service.IPartService;
 import com.nt.service.IPurchaseOrderService;
 import com.nt.service.IShipmentTypeService;
 import com.nt.service.IWhUserTypeService;
+import com.nt.view.VendorInvoicePdfView;
 
 @Controller
 @RequestMapping("/po")
@@ -84,11 +88,13 @@ public class PurchaseOrderController {
 	
 	///---------------------------(Screen#2)------------------------------
 	
-	private void commonUiForParts(Model model) {
-		model.addAttribute("parts", partService.getPartIdAndCode());
-	}
-		@GetMapping("/parts")
-		public String showPoPartsPage(
+         	private void commonUiForParts(Model model) {
+		          model.addAttribute("parts", partService.getPartIdAndCode());
+	        }
+	
+	
+	@GetMapping("/parts")
+	public String showPoPartsPage(
 				@RequestParam Integer id,
 				Model model
 				) 
@@ -99,8 +105,14 @@ public class PurchaseOrderController {
 			//send PO to UI
 			model.addAttribute("po", po);
 			
-			// drop down parts purpose
-			commonUiForParts(model);
+			String status = service.getCurrentStatusOfPo(id);
+			if(PurchaseOrderStatus.OPEN.name().equals(status) || 
+					PurchaseOrderStatus.PICKING.name().equals(status)
+					) 
+					{
+						// DropDown for Parts
+						commonUiForParts(model);
+					}
 			
 			//fetch all (if added parts)
 			List<PurchaseDtl> poDtls = service.getPurchaseDt1sByPoId(id); //OrderId/POId
@@ -117,8 +129,29 @@ public class PurchaseOrderController {
 		 */
 		@PostMapping("/addPart")
 		public String addPart(PurchaseDtl dtl) {
-			service.savePurchaseDtl(dtl);
+			
+			//service.savePurchaseDtl(dtl);
 			Integer poId=dtl.getPo().getId();// PO id/OrderId
+			
+			
+			if( PurchaseOrderStatus.OPEN.name()
+					.equals(service.getCurrentStatusOfPo(poId))
+					|| 
+					PurchaseOrderStatus.PICKING.name()
+					.equals(service.getCurrentStatusOfPo(poId)) 
+					) 
+			{
+			Integer partId=dtl.getPart().getId();
+			  
+			Optional<PurchaseDtl> opt = service.getPurchaseDtlByPartIdAndPoId(partId, poId);
+			
+			if(opt.isPresent()) {               //  part already added update qty
+				     //   update call //(Qty, dtlId)
+				service.updatePurchaseDtlQtyByDtlId(dtl.getQty(), opt.get().getId());
+				     
+			} else { //part is adding first time to PO , so insert
+				service.savePurchaseDtl(dtl);
+			}
 			
 			if(PurchaseOrderStatus.OPEN.name()
 					.equals(service.getCurrentStatusOfPo(poId))
@@ -126,7 +159,7 @@ public class PurchaseOrderController {
 				service.updatePoStatus(poId, PurchaseOrderStatus.PICKING.name());
 			}
 			
-			
+			}
 			return "redirect:parts?id="+poId;
 		}
 		
@@ -136,14 +169,106 @@ public class PurchaseOrderController {
 				@RequestParam Integer dtlId
 				)
 		{
+			
+			if(PurchaseOrderStatus.PICKING.name()
+					.equals(service.getCurrentStatusOfPo(poId))
+					) 
+			{
 			service.deletePurchaseDtl(dtlId);
 			
 			if(service.getPurchaseDtlsCountByPoId(poId)==0) {
 				service.updatePoStatus(poId, PurchaseOrderStatus.OPEN.name()); 
+			         }
 			}
 			return "redirect:parts?id="+poId; //orerId/PO ID
 		
 
-		}	
+		}
+		/***
+		 * IncreaseQty by +1
+		 */
+		@GetMapping("/increaseQty")
+		public String increaseQty(
+				@RequestParam Integer poId,
+				@RequestParam Integer dtlId
+				)
+		{
+			service.updatePurchaseDtlQtyByDtlId(1, dtlId);
+			return "redirect:parts?id="+poId; //orerId/PO ID;
+		}
+		
+		/***
+		 * reduce Qty by -1
+		 */
+		@GetMapping("/reduceQty")
+		public String reduceQty(
+				@RequestParam Integer poId,
+				@RequestParam Integer dtlId
+				)
+		{
+			service.updatePurchaseDtlQtyByDtlId(-1, dtlId);
+			return "redirect:parts?id="+poId; //orerId/PO ID;
+		}
+		
+		/*
+		 * Place order
+		 */
+		@GetMapping("/placeorder")
+		public String placeOrder(@RequestParam Integer poId) {
+			
+			if(PurchaseOrderStatus.PICKING.name()
+			.equals(service.getCurrentStatusOfPo(poId))
+		     )    
+			{
+				service.updatePoStatus(poId, PurchaseOrderStatus.ORDERED.name());
+				
+			}
+			
+			return "redirect:parts?id="+poId;
+		}
+		/*
+		 * cancel order
+		 */
+		@GetMapping("/cancel")
+		public String cancelOrder(@RequestParam Integer id) {
+			
+			  
+			 // only if current status is open |picking| ordered|!cancelled
+				service.updatePoStatus(id, PurchaseOrderStatus.CANCELLED.name());
+				
+			
+			
+			return "redirect:all";
+		}
+		
+		/**
+		 * GENERATE ORDER
+		 */
+		@GetMapping("/generate")
+		public String generateInvoice(@RequestParam Integer id) 
+		{
+			service.updatePoStatus(id, PurchaseOrderStatus.INVOICED.name());
+			return "redirect:all";
+		}
+		
+		/***
+		 * PDF Export
+		 */
+		@GetMapping("/print")
+		public ModelAndView showVendorInvoice(
+				@RequestParam Integer id)
+		{
+			ModelAndView m = new ModelAndView();
+			m.setView(new VendorInvoicePdfView());
+			
+			List<PurchaseDtl> list = service.getPurchaseDt1sByPoId(id);
+			m.addObject("list", list);
+			
+			PurchaseOrder po =  service.getOnePurchaseOrder(id);
+			m.addObject("po", po);
+			return m;
+		}
+
+		
 		
 }

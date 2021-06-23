@@ -19,6 +19,7 @@ public class PurchaseDtl {
 	@Id
 	@GeneratedValue(generator = "pdt1_gen")
 	@SequenceGenerator(name="pdt1_gen",sequenceName = "pdtl_seq")
+	@Column(name="po_dlt_id_col")
 	private Integer id;
 	
 	@Column(name="po_dlt_qty_col")

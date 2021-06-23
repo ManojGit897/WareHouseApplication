@@ -1,4 +1,4 @@
-<html xmlns:th="https://www.thymeleaf.org/">
+ <html xmlns:th="https://www.thymeleaf.org/">
 
 <head>
 	<title>PO DATA PAGE</title>
@@ -28,7 +28,7 @@
 			<hr/>
 			
 			
-			<form th:action="@{/po/addPart}" method="POST">
+			<form  th:if="${po.status=='PICKING'|| po.status=='OPEN'}" th:action="@{/po/addPart}" method="POST">
 				<div class="row">
 					<div class="col-6">
 						<label>Choose Part</label>
@@ -52,23 +52,39 @@
 				</div>
 			</form>
 			
-			<hr/>
+		
 			<table class="table table-hover">
 				<tr>
 					<th>SLNO</th>
 					<th>PART</th>
 					<th>COST</th>
 					<th>QUANITYT</th>
-					<th>OPERATION</th>
+					<th th:if="${po.status == 'PICKING'}">OPERATION</th>
 				</tr>
 				<tr th:each="ob,i:${list}">
 					<td th:text="${i.count}"></td>
 					<td th:text="${ob.part.partCode}"></td>
 					<td th:text="${ob.part.partBaseCost}"></td>
-					<td th:text="${ob.qty}"></td>
-					<td><a class="btn btn-warning" th:href="@{/po/removePart(poId=${po.id},dtlId=${ob.id})}">REMOVE <i class="fa fa-minus-circle" aria-hidden="true"></i></a></td>
+					<td>
+						<span th:text="${ob.qty}"></span>
+						<a th:if="${po.status == 'PICKING'}" th:href="@{/po/increaseQty(poId=${po.id},dtlId=${ob.id})}" class="btn btn-success">+</a>
+						<span th:if="${ob.qty>1&& (po.status == 'PICKING')}">
+							<a th:href="@{/po/reduceQty(poId=${po.id},dtlId=${ob.id})}" class="btn btn-danger">-</a>
+						</span>
+					</td>
+					<td>
+						<a th:if="${po.status == 'PICKING'}" class="btn btn-warning" th:href="@{/po/removePart(poId=${po.id},dtlId=${ob.id})}">REMOVE 
+							<i class="fa fa-minus-circle" aria-hidden="true"></i>
+						</a>
+					</td>
 				</tr>
 			</table>
+			<hr/>
+			<div th:if="${po.status=='PICKING'}" align="center">
+			<a th:href="@{/po/placeorder(poId=${po.id})}" class="btn btn-primary" > PLACE ORDER</a>
+			
+			</div>
+			
 		</div>
 			
 
